@@ -25,7 +25,6 @@ jobs:
       uses: android-actions/setup-android@v3
 
     - name: Setup Gradle Wrapper
-      working-directory: app
       run: |
         chmod +x gradlew
         
@@ -62,7 +61,6 @@ jobs:
         echo '</vector>' >> src/main/res/drawable/ic_launcher_foreground.xml
 
     - name: Build APK
-      working-directory: app
       run: |
         echo "Starting Gradle build..."
         ./gradlew clean assembleDebug --stacktrace --info
