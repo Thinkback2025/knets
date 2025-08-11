@@ -20,6 +20,7 @@ import com.knets.jr.api.RetrofitClient
 import com.knets.jr.databinding.ActivityMainBinding
 import com.knets.jr.model.DeviceRegistration
 import com.knets.jr.model.DeviceInfo
+import com.knets.jr.model.ConnectResponse
 import com.knets.jr.service.ScheduleMonitorService
 import com.knets.jr.service.NetworkController
 import kotlinx.coroutines.launch
@@ -238,7 +239,7 @@ class MainActivity : AppCompatActivity() {
                         putBoolean("is_registered", true)
                         putString("parent_code", parentCode)
                         putString("device_imei", deviceImei)
-                        putString("child_name", responseBody.childName)
+                        putString("child_name", responseBody.childName ?: "Unknown Child")
                         apply()
                     }
                     
@@ -246,7 +247,7 @@ class MainActivity : AppCompatActivity() {
                     checkRegistrationStatus()
                     dialog.dismiss()
                     
-                    Log.i(TAG, "Device connected successfully to ${responseBody.childName}! You're now part of the Knets family system.")
+                    Log.i(TAG, "Device connected successfully to ${responseBody.childName ?: "child"}! You're now part of the Knets family system.")
                 } else {
                     Log.w(TAG, "Invalid parent code or connection failed. Please check the code and try again.")
                 }

@@ -1,6 +1,7 @@
 package com.knets.jr.api
 
 import com.knets.jr.model.ApiResponse
+import com.knets.jr.model.ConnectResponse
 import com.knets.jr.model.DeviceRegistration
 import com.knets.jr.model.DeviceStatus
 import com.knets.jr.model.DeviceInfo
@@ -20,7 +21,7 @@ interface KnetsApiService {
     suspend fun connectDevice(@Body connectionData: Map<String, String>): Response<ApiResponse<Any>>
     
     @POST("api/device/connect")
-    suspend fun connectDeviceWithParentCode(@Body connectionData: Map<String, String>): Response<ApiResponse<Any>>
+    suspend fun connectDeviceWithParentCode(@Body connectionData: Map<String, String>): Response<ConnectResponse>
     
     @GET("api/companion/schedules/{imei}")
     suspend fun getDeviceSchedules(@Path("imei") imei: String): List<Schedule>
