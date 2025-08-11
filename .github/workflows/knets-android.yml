@@ -1,0 +1,78 @@
+name: Build Knets Jr Android APK
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+
+    - name: Setup Android SDK
+      uses: android-actions/setup-android@v3
+
+    - name: Setup Gradle Wrapper
+      working-directory: app
+      run: |
+        chmod +x gradlew
+        
+        if [ ! -f "gradle/wrapper/gradle-wrapper.jar" ]; then
+          echo "Downloading Gradle wrapper jar..."
+          mkdir -p gradle/wrapper
+          curl -L -o gradle/wrapper/gradle-wrapper.jar \
+            https://github.com/gradle/gradle/raw/v8.3.0/gradle/wrapper/gradle-wrapper.jar
+        fi
+        
+        if [ ! -f "gradle/wrapper/gradle-wrapper.properties" ]; then
+          echo "Creating gradle-wrapper.properties..."
+          echo "distributionBase=GRADLE_USER_HOME" > gradle/wrapper/gradle-wrapper.properties
+          echo "distributionPath=wrapper/dists" >> gradle/wrapper/gradle-wrapper.properties
+          echo "distributionUrl=https\://services.gradle.org/distributions/gradle-8.3-bin.zip" >> gradle/wrapper/gradle-wrapper.properties
+          echo "networkTimeout=10000" >> gradle/wrapper/gradle-wrapper.properties
+          echo "validateDistributionUrl=true" >> gradle/wrapper/gradle-wrapper.properties
+          echo "zipStoreBase=GRADLE_USER_HOME" >> gradle/wrapper/gradle-wrapper.properties
+          echo "zipStorePath=wrapper/dists" >> gradle/wrapper/gradle-wrapper.properties
+        fi
+
+    - name: Create app icons
+      working-directory: app
+      run: |
+        mkdir -p src/main/res/drawable-mdpi
+        mkdir -p src/main/res/drawable-hdpi  
+        mkdir -p src/main/res/drawable-xhdpi
+        mkdir -p src/main/res/drawable-xxhdpi
+        mkdir -p src/main/res/drawable-xxxhdpi
+        
+        echo '<?xml version="1.0" encoding="utf-8"?>' > src/main/res/drawable/ic_launcher_foreground.xml
+        echo '<vector xmlns:android="http://schemas.android.com/apk/res/android" android:width="24dp" android:height="24dp" android:viewportWidth="24" android:viewportHeight="24">' >> src/main/res/drawable/ic_launcher_foreground.xml
+        echo '  <path android:fillColor="#2196F3" android:pathData="M12,2C6.48,2 2,6.48 2,12s4.48,10 10,10 10,-4.48 10,-10S17.52,2 12,2zM13,17h-2v-6h2v6zM13,9h-2L11,7h2v2z"/>' >> src/main/res/drawable/ic_launcher_foreground.xml
+        echo '</vector>' >> src/main/res/drawable/ic_launcher_foreground.xml
+
+    - name: Build APK
+      working-directory: app
+      run: |
+        echo "Starting Gradle build..."
+        ./gradlew clean assembleDebug --stacktrace --info
+        
+        echo "Checking for generated APK..."
+        find . -name "*.apk" -type f -exec ls -la {} \;
+
+    - name: Upload APK
+      uses: actions/upload-artifact@v4
+      with:
+        name: knets-jr-apk
+        path: app/build/outputs/apk/debug/*.apk
+        retention-days: 30
