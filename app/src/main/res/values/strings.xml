@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Knets Jr</string>
+    <string name="registration_title">Connect to Family Knets</string>
+    <string name="enter_mobile_number">Child\'s Mobile Number</string>
+    <string name="mobile_number_hint">Enter your mobile number</string>
+    <string name="connect_device">Connect My Device</string>
+    <string name="searching_database">Searching Database...</string>
+    <string name="device_admin_description">Knets Jr needs device administrator permissions to enforce parental controls, lock the device during restricted hours, and ensure child safety. This permission allows the app to lock the screen when schedules are active.</string>
+    <string name="admin_enabled">Device protection is now active</string>
+    <string name="admin_disabled">Device protection has been disabled</string>
+    <string name="registration_success">Device registered successfully with Knets</string>
+    <string name="registration_failed">Failed to register device. Please check your internet connection and try again.</string>
+    <string name="device_locked">Device locked by schedule</string>
+    <string name="schedule_active">Parental control schedule is currently active</string>
+    <string name="notification_channel_name">Knets Jr Service</string>
+    <string name="notification_channel_description">Shows when parental control service is running</string>
+</resources>

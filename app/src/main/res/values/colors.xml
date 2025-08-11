@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary_blue">#3498db</color>
+    <color name="primary_blue_dark">#2980b9</color>
+    <color name="success_green">#27ae60</color>
+    <color name="warning_orange">#f39c12</color>
+    <color name="error_red">#e74c3c</color>
+    
+    <color name="text_primary">#2c3e50</color>
+    <color name="text_secondary">#7f8c8d</color>
+    <color name="background">#ffffff</color>
+    <color name="surface">#f8f9fa</color>
+    
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    
+    <!-- App theme colors -->
+    <color name="colorPrimary">#3498db</color>
+    <color name="colorPrimaryDark">#2980b9</color>
+    <color name="colorAccent">#27ae60</color>
+</resources>
